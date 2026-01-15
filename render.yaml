@@ -1,0 +1,23 @@
+# Render manifest (ejemplo) — despliega backend (Docker) y frontend (static site)
+# Reemplaza valores como `branch` si tu rama principal tiene otro nombre.
+
+services:
+  - type: web
+    name: chatbot-backend
+    env: docker
+    dockerfilePath: backend/Dockerfile
+    branch: main
+    plan: starter
+
+  - type: static
+    name: chatbot-frontend
+    env: static
+    branch: main
+    plan: starter
+    buildCommand: "cd frontend && npm ci && npm run build"
+    publishPath: "frontend/dist"
+
+databases:
+  - name: chatbot-db
+    engine: postgres
+    plan: starter

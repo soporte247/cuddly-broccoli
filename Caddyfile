@@ -1,0 +1,16 @@
+chat.data-shark.com {
+    root * /usr/share/caddy
+    encode gzip
+    file_server
+
+    # Proxy API requests to backend
+    @api {
+        path /api/*
+    }
+    reverse_proxy @api backend:8000
+}
+
+# Redirect apex domain to subdomain
+data-shark.com {
+    redir https://chat.data-shark.com{uri} 301
+}
